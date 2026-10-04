@@ -2,8 +2,7 @@
 
 A reusable starter for exercising HTTP APIs with k6 or Gatling. Use your own API, or start one of the included mock servers documented in [`mock-servers/README.md`](mock-servers/README.md).
 
-
-![](github-load-test-readme-movie-compressed.mp4)
+https://github.com/user-attachments/assets/fb8cbe7f-54ef-4d81-ba53-d068ea34fe12
 
 ## Set the project root
 
