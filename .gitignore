@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+__pycache__/
+*.log
+
+# Gatling build output and generated reports
+gatling/target/
+gatling/results/
+gatling/failed-requests.log
+mock-server-spring-boot/target/
+
+# k6 outputs
+k6/results/

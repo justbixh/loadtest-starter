@@ -1,0 +1,26 @@
+server:
+  port: ${SERVER_PORT:3000}
+  tomcat:
+    # Maximum concurrent request-processing threads. Reduce this to create a constrained server.
+    threads:
+      max: ${TOMCAT_MAX_THREADS:200}
+      min-spare: ${TOMCAT_MIN_SPARE_THREADS:10}
+    # Maximum queued connections when all request threads are busy.
+    accept-count: ${TOMCAT_ACCEPT_COUNT:100}
+    # Maximum simultaneous connections accepted by Tomcat.
+    max-connections: ${TOMCAT_MAX_CONNECTIONS:8192}
+    # Keep these low for a quick demo; increase for longer-running clients.
+    connection-timeout: ${TOMCAT_CONNECTION_TIMEOUT:5s}
+    keep-alive-timeout: ${TOMCAT_KEEP_ALIVE_TIMEOUT:20s}
+    max-keep-alive-requests: ${TOMCAT_MAX_KEEP_ALIVE_REQUESTS:100}
+    # Enable JMX metrics for inspecting the embedded Tomcat connector.
+    mbeanregistry:
+      enabled: ${TOMCAT_MBEAN_REGISTRY_ENABLED:true}
+
+spring:
+  application:
+    name: orders-mock-server
+
+mock:
+  # Artificial delay applied to POST /api/orders to simulate downstream work.
+  response-delay-ms: ${MOCK_RESPONSE_DELAY_MS:0}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- Generated in the Gatling module directory and excluded from version control. -->
+        <file>failed-requests.log</file>
+	<!-- false = overwrite on each run; true = keep appending across runs -->
+        <append>false</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logs full request + response, including bodies, ONLY for requests that fail a check. 
+    Bump to TRACE to log every request/response regardless of pass/fail -->
+    <logger name="io.gatling.http.engine.response" level="DEBUG" />
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

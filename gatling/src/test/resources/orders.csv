@@ -1,0 +1,5 @@
+sku,quantity,unitPrice,customerType
+SKU-1001,1,19.99,retail
+SKU-1002,2,7.50,wholesale
+SKU-1003,3,12.25,retail
+SKU-1004,1,99.00,wholesale

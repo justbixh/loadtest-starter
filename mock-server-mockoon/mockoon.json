@@ -1,0 +1,98 @@
+{
+  "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901001",
+  "lastMigration": 32,
+  "name": "Local Orders API",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "127.0.0.1",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901011",
+      "type": "http",
+      "documentation": "Health check",
+      "method": "get",
+      "endpoint": "health",
+      "responses": [
+        {
+          "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901012",
+          "body": "{\n  \"status\": \"ok\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Healthy",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "responseMode": null,
+      "enabled": true
+    },
+    {
+      "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901021",
+      "type": "http",
+      "documentation": "Create an order",
+      "method": "post",
+      "endpoint": "api/orders",
+      "responses": [
+        {
+          "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901022",
+          "body": "{\n  \"status\": \"accepted\",\n  \"message\": \"Order accepted\",\n  \"orderId\": \"mock-order-001\"\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "Order accepted",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "responseMode": null,
+      "enabled": true
+    }
+  ],
+  "rootChildren": [
+    { "type": "route", "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901011" },
+    { "type": "route", "uuid": "c4f672b4-ec6f-4ac7-9a6b-1e194c901021" }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    { "key": "Content-Type", "value": "application/json" }
+  ],
+  "proxyReqHeaders": [{ "key": "", "value": "" }],
+  "proxyResHeaders": [{ "key": "", "value": "" }],
+  "data": [],
+  "callbacks": []
+}
