@@ -7,9 +7,7 @@ A reusable starter for exercising HTTP APIs with k6 or Gatling. Use your own API
 From the project root, load `.env` in each terminal:
 
 ```sh
-set -a
-. ./.env
-set +a
+set -a; source $LOADBASE/.env; set +a
 ```
 
 `LOADBASE` points to the project root and is used by the helper commands.

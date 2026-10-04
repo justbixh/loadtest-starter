@@ -1,7 +1,4 @@
 # Source from the project root after loading .env:
-#   set -a && . ./.env && set +a
-#
-# Project shortcuts. The servers and load tests use LOADBASE.
 
 alias load='cd "$LOADBASE"'
 alias lok='cd "$LOADBASE/k6" && k6 run order-create.js'
