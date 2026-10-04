@@ -1,15 +1,14 @@
 # Source from the project root after loading .env:
 #   set -a && . ./.env && set +a
 #
-# Project shortcuts. The servers and load tests use LOAD_BASE.
-alias lt-root='cd "$LOAD_BASE"'
-alias lt-python='cd "$LOAD_BASE" && ./mock-servers/python/start.sh'
-alias lt-mockoon='cd "$LOAD_BASE" && ./mock-servers/mockoon/start.sh'
-alias lt-spring='cd "$LOAD_BASE/mock-servers/spring-boot" && ./mvnw spring-boot:run'
-alias lt-k6='cd "$LOAD_BASE/k6" && k6 run order-create.js'
-alias lt-gatling='cd "$LOAD_BASE/gatling" && ./mvnw gatling:test -Dgatling.simulationClass=simulations.OrderCreateSimulation'
+# Project shortcuts. The servers and load tests use LOADBASE.
+
+alias load='cd "$LOADBASE"'
+alias lok='cd "$LOADBASE/k6" && k6 run order-create.js'
+alias gat='cd "$LOADBASE/gatling"'
+alias gat='cd "$LOADBASE/gatling" && ./mvnw gatling:test -Dgatling.simulationClass=simulations.OrderCreateSimulation'
 
 gatrun() {
-  cd "$LOAD_BASE/gatling" && ./mvnw gatling:test \
+  cd "$LOADBASE/gatling" && ./mvnw gatling:test \
     -Dgatling.simulationClass="simulations.$1"
 }

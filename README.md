@@ -12,7 +12,7 @@ set -a
 set +a
 ```
 
-`LOAD_BASE` points to the project root and is used by the helper commands.
+`LOADBASE` points to the project root and is used by the helper commands.
 
 ## Run a load test
 
@@ -23,21 +23,21 @@ Install k6 (macOS: `brew install k6`; Ubuntu/Debian: `sudo snap install k6`). Se
 Run k6:
 
 ```sh
-cd "$LOAD_BASE/k6"
+cd "$LOADBASE/k6"
 k6 run order-create.js
 ```
 
 Run Gatling (Java 17+ required; the included Maven wrapper downloads Maven on first use):
 
 ```sh
-cd "$LOAD_BASE/gatling"
+cd "$LOADBASE/gatling"
 ./mvnw gatling:test -Dgatling.simulationClass=simulations.OrderCreateSimulation
 ```
 
 Both tests default to 10 requests per second for 30 seconds. For example, set k6 rate and duration with:
 
 ```sh
-cd "$LOAD_BASE/k6"
+cd "$LOADBASE/k6"
 k6 run -e RATE=25 -e DURATION=1m order-create.js
 ```
 

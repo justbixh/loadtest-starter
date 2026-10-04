@@ -33,7 +33,7 @@ npm install --global @mockoon/cli
 Requires Java 17+. The project includes a Maven wrapper, so a separate Maven installation is not required:
 
 ```sh
-cd "$LOAD_BASE/mock-servers/spring-boot"
+cd "$LOADBASE/mock-servers/spring-boot"
 ./mvnw spring-boot:run
 ```
 
@@ -52,7 +52,7 @@ Settings are in [`spring-boot/src/main/resources/application.yml`](spring-boot/s
 For example, run Spring with 20 request threads, a queue of 10, and a 100 ms order response delay:
 
 ```sh
-cd "$LOAD_BASE/mock-servers/spring-boot"
+cd "$LOADBASE/mock-servers/spring-boot"
 TOMCAT_MAX_THREADS=20 TOMCAT_ACCEPT_COUNT=10 MOCK_RESPONSE_DELAY_MS=100 ./mvnw spring-boot:run
 ```
 
