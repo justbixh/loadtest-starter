@@ -7,7 +7,7 @@ __pycache__/
 # Gatling build output and generated reports
 gatling/target/
 gatling/failed-requests.log
-mock-server-spring-boot/target/
+mock-servers/spring-boot/target/
 
 # k6 outputs
 k6/results/

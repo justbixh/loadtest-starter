@@ -1,10 +1,10 @@
-# Local API load-test starter
+# Load-test starter
 
-A reusable load-test demo with the same order API implemented three ways: a dependency-free Python stub, Mockoon, or Spring Boot. Load it with k6 or Gatling; both scenarios read varied payloads from the same CSV file.
+A reusable starter for exercising HTTP APIs with k6 or Gatling. Use your own API, or start one of the included mock servers documented in [`mock-servers/README.md`](mock-servers/README.md).
 
-## Set the project root once
+## Set the project root
 
-In each terminal, start from the project root and source `.env`:
+From the project root, load `.env` in each terminal:
 
 ```sh
 set -a
@@ -12,124 +12,50 @@ set -a
 set +a
 ```
 
-The root [`.env`](.env) sets `LOAD_BASE` to the current project root. Startup and load-test commands use this shared value; update `LOAD_BASE` only if you source `.env` from somewhere other than the project root. Both load-test scripts target `http://127.0.0.1:3000`; change the hardcoded URL in k6 and Gatling if you use another host or port.
-
-## Pick a mock server
-
-All three servers implement `GET /health` and `POST /api/orders` on port 3000. Start exactly one server at a time.
-
-Each server logs a short request/status line so you can see requests arrive. Mockoon logs full request/response transactions; disable `--log-transaction` in its start script for quieter, more representative high-load runs.
-
-### Python (no dependencies)
-
-Requires Python 3:
-
-```sh
-./mock-server-python/start.sh
-```
-
-### Mockoon CLI
-
-Requires Node.js 18+ (npm is included). Install Node.js, for example on macOS with Homebrew:
-
-```sh
-brew install node
-npm install --global @mockoon/cli
-./mock-server-mockoon/start.sh
-```
-
-### Spring Boot
-
-Requires Java 17+. The Spring project includes its own Maven wrapper, so Maven does not need to be installed separately:
-
-```sh
-cd "$LOAD_BASE/mock-server-spring-boot"
-./mvnw spring-boot:run
-```
-
-Alternatively, from the project root use the helper:
-
-```sh
-cd "$LOAD_BASE"
-./mock-server-spring-boot/start.sh
-```
-
-The first run downloads Maven and the project dependencies. Press `Ctrl+C` in the server terminal to stop it.
-
-## Tune Spring Boot and Tomcat
-
-Settings are in [`application.yml`](mock-server-spring-boot/src/main/resources/application.yml). It exposes Tomcat worker threads, spare threads, queued connections, max connections, connection/keep-alive timeouts, and JMX metrics. `MOCK_RESPONSE_DELAY_MS` adds a delay to order creation to simulate downstream work.
-
-For example, with the server stopped, source `.env` in the project root, then run Spring with a 20-thread pool, a queue of 10, and a 100 ms response delay:
-
-```sh
-cd "$LOAD_BASE/mock-server-spring-boot"
-TOMCAT_MAX_THREADS=20 TOMCAT_ACCEPT_COUNT=10 MOCK_RESPONSE_DELAY_MS=100 ./mvnw spring-boot:run
-```
-
-If you change the server port with `SERVER_PORT`, update the hardcoded API URL in both k6 and Gatling scripts to match.
+`LOAD_BASE` points to the project root and is used by the helper commands.
 
 ## Run a load test
 
-Install k6: on macOS with Homebrew use `brew install k6`; on Ubuntu/Debian use `sudo snap install k6`. See the [k6 installation guide](https://grafana.com/docs/k6/latest/set-up/install-k6/) for other platforms.
+The included examples target `http://127.0.0.1:3000`. To test another API, change the URL in both `k6/order-create.js` and `gatling/src/test/java/simulations/OrderCreateSimulation.java`.
 
-With one mock server running in terminal 1, source `.env` from the project root in another terminal, then run k6:
+Install k6 (macOS: `brew install k6`; Ubuntu/Debian: `sudo snap install k6`). See the [k6 installation guide](https://grafana.com/docs/k6/latest/set-up/install-k6/) for other platforms.
+
+Run k6:
 
 ```sh
 cd "$LOAD_BASE/k6"
 k6 run order-create.js
 ```
 
-Or run Gatling (requires Java 17+; the included Maven wrapper downloads Maven on first use):
+Run Gatling (Java 17+ required; the included Maven wrapper downloads Maven on first use):
 
 ```sh
 cd "$LOAD_BASE/gatling"
 ./mvnw gatling:test -Dgatling.simulationClass=simulations.OrderCreateSimulation
 ```
 
-The package name is `simulations` (plural), matching the declaration in `OrderCreateSimulation.java`.
-
-Both tests default to 10 requests per second for 30 seconds. Override the rate and duration for k6 with:
+Both tests default to 10 requests per second for 30 seconds. For example, set k6 rate and duration with:
 
 ```sh
 cd "$LOAD_BASE/k6"
 k6 run -e RATE=25 -e DURATION=1m order-create.js
 ```
 
-For Gatling:
-
-```sh
-cd "$LOAD_BASE/gatling"
-./mvnw gatling:test \
-  -Dgatling.simulationClass=simulations.OrderCreateSimulation \
-  -Drate=25 \
-  -DdurationSeconds=60
-```
-
-Gatling writes an HTML report under `gatling/target/gatling/`. Run only one load generator at a time when comparing results.
-
-## API
-
-| Method | Path | Response |
-|---|---|---|
-| `GET` | `/health` | `{"status":"ok"}` |
-| `POST` | `/api/orders` | `{"status":"accepted","message":"Order accepted","orderId":"mock-order-001"}` |
-
-The response is intentionally static; this project demonstrates load-test setup and server behavior, not business logic.
+Gatling options can be overridden with `-Drate=25 -DdurationSeconds=60`. Reports are generated under `gatling/target/gatling/`. Run only one load generator at a time when comparing results.
 
 ## Change payloads
 
-Edit [`gatling/src/test/resources/orders.csv`](gatling/src/test/resources/orders.csv). Both load generators read this file. Gatling cycles its CSV feeder; k6 cycles through its rows. Keep values simple (no commas or quoted fields).
+Edit [`gatling/src/test/resources/orders.csv`](gatling/src/test/resources/orders.csv). Both load generators read this shared CSV file; Gatling cycles its feeder and k6 cycles through the rows.
 
 ## Project layout
 
 ```text
 .
-├── .env
 ├── gatling/
 ├── k6/
-├── mock-server-mockoon/
-├── mock-server-python/
-└── mock-server-spring-boot/
-    └── src/main/resources/application.yml
+└── mock-servers/
+    ├── mockoon/
+    ├── python/
+    ├── spring-boot/
+    └── README.md
 ```
