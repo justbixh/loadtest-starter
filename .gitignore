@@ -1,11 +1,11 @@
 .DS_Store
+.vscode
 node_modules/
 __pycache__/
 *.log
 
 # Gatling build output and generated reports
 gatling/target/
-gatling/results/
 gatling/failed-requests.log
 mock-server-spring-boot/target/
 

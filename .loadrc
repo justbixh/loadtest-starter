@@ -1,7 +1,7 @@
 # Source from the project root after loading .env:
 #   set -a && . ./.env && set +a
 #
-# Project shortcuts. The servers and load tests use LOAD_BASE and MOCK_API_URL.
+# Project shortcuts. The servers and load tests use LOAD_BASE.
 alias lt-root='cd "$LOAD_BASE"'
 alias lt-python='cd "$LOAD_BASE" && ./mock-server-python/start.sh'
 alias lt-mockoon='cd "$LOAD_BASE" && ./mock-server-mockoon/start.sh'

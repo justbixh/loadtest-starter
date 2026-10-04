@@ -8,14 +8,14 @@ import io.gatling.javaapi.http.*;
 
 public class OrderCreateSimulation extends Simulation {
 
-    private static final String MOCK_API_URL = System.getenv().getOrDefault("MOCK_API_URL", "http://127.0.0.1:3000");
+    private static final String API_BASE_URL = "http://127.0.0.1:3000";
     private static final double RATE = Double.parseDouble(System.getProperty("rate", "10"));
     private static final int DURATION_SECONDS = Integer.getInteger("durationSeconds", 30);
 
     private final FeederBuilder<String> orders = csv("orders.csv").circular();
 
     private final HttpProtocolBuilder httpProtocol = http
-            .baseUrl(MOCK_API_URL)
+            .baseUrl(API_BASE_URL)
             .contentTypeHeader("application/json");
 
     private final String requestBody = """

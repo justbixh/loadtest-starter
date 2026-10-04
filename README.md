@@ -12,7 +12,7 @@ set -a
 set +a
 ```
 
-The root [`.env`](.env) sets `LOAD_BASE` to the current project root and `MOCK_API_URL` to the local API address. Startup and load-test commands use these shared values; update `LOAD_BASE` only if you source `.env` from somewhere other than the project root.
+The root [`.env`](.env) sets `LOAD_BASE` to the current project root. Startup and load-test commands use this shared value; update `LOAD_BASE` only if you source `.env` from somewhere other than the project root. Both load-test scripts target `http://127.0.0.1:3000`; change the hardcoded URL in k6 and Gatling if you use another host or port.
 
 ## Pick a mock server
 
@@ -67,7 +67,7 @@ cd "$LOAD_BASE/mock-server-spring-boot"
 TOMCAT_MAX_THREADS=20 TOMCAT_ACCEPT_COUNT=10 MOCK_RESPONSE_DELAY_MS=100 ./mvnw spring-boot:run
 ```
 
-If you change the server port with `SERVER_PORT`, also update `MOCK_API_URL` in `.env` to match.
+If you change the server port with `SERVER_PORT`, update the hardcoded API URL in both k6 and Gatling scripts to match.
 
 ## Run a load test
 

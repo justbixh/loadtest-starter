@@ -10,7 +10,7 @@ const csvRows = open('../gatling/src/test/resources/orders.csv')
     return { sku, quantity: Number(quantity), unitPrice: Number(unitPrice), customerType };
   });
 
-const baseUrl = __ENV.MOCK_API_URL || 'http://127.0.0.1:3000';
+const baseUrl = 'http://127.0.0.1:3000';
 const rate = Number(__ENV.RATE || 10);
 const duration = __ENV.DURATION || '30s';
 
